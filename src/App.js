@@ -4,11 +4,13 @@ import { useState } from "react";
  * must start with a capital letter or they won’t work!
  */
 
+const MAX_STEP = 9;
 
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext = currentMove % 2 === 0;
+  const isGameEnd = currentMove === MAX_STEP;
   const currentSquares = history[currentMove];
   
   function handlePlay(nextSquares) {
@@ -40,7 +42,7 @@ export default function Game() {
       <h1>Tic Tac Toe Game</h1>
       <div className="game">
         <div className="game-board">
-          <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay}/>
+          <Board isGameEnd={isGameEnd} xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay}/>
         </div>
         <div className="game-info">
           <ol>{ moves }</ol>
@@ -51,7 +53,7 @@ export default function Game() {
 }
 
 
-function Board({xIsNext, squares, onPlay}) {
+function Board({isGameEnd, xIsNext, squares, onPlay}) {
 
   function handleClick(i) {
     if (squares[i] || calculateWinner(squares)) {
@@ -73,6 +75,8 @@ function Board({xIsNext, squares, onPlay}) {
 
   if (winner) {
     status = "Winner: " + winner;
+  } else if (isGameEnd) {
+    status = "Draw";
   } else {
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
@@ -126,3 +130,4 @@ function calculateWinner(squares) {
   }
   return null;
 }
+
