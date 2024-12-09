@@ -1,4 +1,9 @@
 import { useState } from "react";
+/**
+ * React components are regular JavaScript functions, but their names 
+ * must start with a capital letter or they won’t work!
+ */
+
 
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
@@ -31,14 +36,17 @@ export default function Game() {
   })
 
   return (
-    <div className="game">
-      <div className="game-board">
-        <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay}/>
+    <>
+      <h1>Tic Tac Toe Game</h1>
+      <div className="game">
+        <div className="game-board">
+          <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay}/>
+        </div>
+        <div className="game-info">
+          <ol>{ moves }</ol>
+        </div>
       </div>
-      <div className="game-info">
-        <ol>{ moves }</ol>
-      </div>
-    </div>
+    </>
   );
 }
 
